@@ -33,6 +33,5 @@ public class AccountController {
     ResponseEntity<UniversalResponse>getAccount(){
         List<Account> accountList = accountService.getAccount();
         return  ResponseEntity.ok().body(UniversalResponse.builder().data(accountList).status(200).message("account retrieved").build());
-
     }
 }
