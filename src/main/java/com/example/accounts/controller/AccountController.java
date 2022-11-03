@@ -1,10 +1,9 @@
 package com.example.accounts.controller;
 
+import com.example.accounts.Dto.AccountDto;
+import com.example.accounts.commons.UniversalResponse;
+import com.example.accounts.model.Account;
 import com.example.accounts.services.AccountService;
-import com.fortune.bank.Dto.AccountDto;
-import com.fortune.bank.commons.UniversalResponse;
-import com.fortune.bank.model.Account;
-import com.fortune.bank.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +18,9 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService;
 
-    @PostMapping("/add/account")
-    ResponseEntity<UniversalResponse>addAccount(@RequestBody AccountDto accountDto){
-       Account  account = accountService.addAccount(accountDto);
+    @PostMapping("/add/account/{customerId}")
+    ResponseEntity<UniversalResponse>addAccount(@RequestBody AccountDto accountDto,@PathVariable("customerId")long customerId){
+       Account account = accountService.addAccount(accountDto,customerId);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -29,16 +28,6 @@ public class AccountController {
                 .toUri();
         return ResponseEntity.created(location).body(UniversalResponse.builder().status(201).data(account).message("account created successfully").build());
     }
-//    @PostMapping("/add/customer")
-//    ResponseEntity<UniversalResponse>addCustomer(@RequestBody CustomerDto customerDto){
-//    Customer customer= accountService.addCustomer(customerDto);
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(customer.getId())
-//                .toUri();
-//        return ResponseEntity.created(location).body(UniversalResponse.builder().status(201).data(customer).message("account created successfully").build());
-//    }
 
     @GetMapping("/get/account")
     ResponseEntity<UniversalResponse>getAccount(){
@@ -46,9 +35,4 @@ public class AccountController {
         return  ResponseEntity.ok().body(UniversalResponse.builder().data(accountList).status(200).message("account retrieved").build());
 
     }
-//    @GetMapping("/get/customers")
-//    ResponseEntity<UniversalResponse>getCustomers(){
-//        List<Customer> customerList = accountService.getCustomers();
-//        return  ResponseEntity.ok().body(UniversalResponse.builder().data(customerList).status(200).message("customers retrieved").build());
-//    }
 }

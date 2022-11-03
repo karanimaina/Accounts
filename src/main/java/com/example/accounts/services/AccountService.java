@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
-    public Account addAccount(AccountDto accountDto, long customerId){
+    public Account addAccount(AccountDto accountDto,long customerId){
         Account account = accountRepository.findAccountByAccountNumber(accountDto.getAccountNumber());
         if (account!= null){
             throw  new AccountException("one of the values is null");
