@@ -1,4 +1,4 @@
-package com.fortune.bank.model;
+package com.example.accounts.model;
 
 import com.example.accounts.Constant.Type;
 import lombok.AllArgsConstructor;
